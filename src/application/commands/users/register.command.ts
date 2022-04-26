@@ -5,10 +5,17 @@ import { UsersRepository } from 'src/infrastructure/repositories/user.repository
 import { SecurityService } from 'src/application/core/securities/security.service';
 import { ResponseModel, RESPONSE_STATUS } from 'src/application/core/configs/response-status.config';
 import { ROLE_CONIFG } from 'src/application/core/auth/auth.config';
+import { IsEmail, IsString, IsNotEmpty, MinLength } from 'class-validator';
 
 export class RegisterUserCommand {
+  @IsString()
+  @IsNotEmpty()
   username: string;
+
+  @IsString()
+  @IsNotEmpty()
   password: string;
+  
   last_ip: string;
   constructor(username: string, password: string, last_ip: string) {
     this.username = username;
