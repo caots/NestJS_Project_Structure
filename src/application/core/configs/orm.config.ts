@@ -4,8 +4,8 @@ export const ormConfig: TypeOrmModuleOptions = {
   host: 'localhost',
   username: 'root',
   password: 'Devzonevn2021@',
-  port: 12020,
-  database: 'base-nestjs',
+  port: 3306,
+  database: 'base_nestjs',
   entities: ["dist/**/*.entity{.ts,.js}"],
   synchronize: false
 }
