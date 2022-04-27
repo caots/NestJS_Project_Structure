@@ -4,7 +4,7 @@ import { ListBlogInHomeQuery } from 'src/application/queries/blogs/_index';
 import { AddOrUpdateBlogCommand } from 'src/application/commands/blogs/_index';
 import { JwtAuthGuard } from 'src/application/core/auth/jwt-auth.guard';
 import { Roles } from 'src/application/core/decorators/roles.decorator';
-import { ROLE_CONIFG } from 'src/application/core/auth/auth.config';
+import { ROLE_CONFIG } from 'src/application/core/auth/auth.config';
 import { ApiBearerAuth, ApiResponse, ApiTags } from '@nestjs/swagger';
 import { ResponseModel } from 'src/application/core/configs/response-status.config';
 import { Blog } from 'src/domain/entities/blog.entity';
@@ -20,7 +20,7 @@ export class BlogsController {
   ) {}
 
   @ApiBearerAuth()
-  @Roles(ROLE_CONIFG.admin)
+  @Roles(ROLE_CONFIG.admin)
   @Get()
   @ApiResponse({ status: 200, description: 'The record has been successfully get list blogs.', type: ListBlogInHome })
   public async getBlogsInHome(
@@ -33,7 +33,7 @@ export class BlogsController {
   }
 
   @ApiBearerAuth()
-  @Roles(ROLE_CONIFG.admin)
+  @Roles(ROLE_CONFIG.admin)
   @Post('create')
   public async addOrUpdateBlog(
     @Body() body: AddOrUpdateBlogCommand

@@ -3,7 +3,7 @@ export const jwtConstants = {
   expiresIn: '24h'
 };
 
-export const ROLE_CONIFG = {
+export const ROLE_CONFIG = {
   anonymous: -1,
   logged: 0,
   admin: 1,
