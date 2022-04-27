@@ -9,7 +9,7 @@ export class BlogsRepository extends BaseRepository<Blog> {
     const [result, total] = await this.findAndCount(
       {
         // where: { name: Like('%' + keyword + '%') }, 
-        order: { name: "DESC" },
+        // order: { name: "DESC" },
         take: limit,
         skip: skip
       } as FindConditions<Blog>
@@ -17,7 +17,7 @@ export class BlogsRepository extends BaseRepository<Blog> {
 
     return {
       data: result,
-      count: total
+      total: total
     }
   }
 }

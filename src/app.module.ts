@@ -1,17 +1,17 @@
-import { Module } from '@nestjs/common';
-import { TypeOrmModule } from '@nestjs/typeorm';
-import { ormConfig } from './application/core/configs/orm.config';
-import { APP_FILTER } from '@nestjs/core';
-import { HttpExceptionFilter } from 'src/application/core/exceptions-filter/http-exception.filter';
-import { HttpExceptionAccessRepository } from 'src/infrastructure/repositories/http-exception-access.repository';
-import { AllExceptionsFilter } from 'src/application/core/exceptions-filter/all-exceptions.filter';
-import { UsersModule } from 'src/api/users/users.module';
-import { BlogsModule } from 'src/api/blogs/blogs.module';
-import { CommonService } from 'src/application/core/ultils/common.service';
-import { NotFoundExceptionFilter } from './application/core/exceptions-filter/not-found.filter';
-import { CqrsModule } from '@nestjs/cqrs';
-import { ConfigModule, ConfigService } from '@nestjs/config';
 import * as Joi from '@hapi/joi';
+import { Module } from '@nestjs/common';
+import { ConfigModule, ConfigService } from '@nestjs/config';
+import { APP_FILTER } from '@nestjs/core';
+import { CqrsModule } from '@nestjs/cqrs';
+import { TypeOrmModule } from '@nestjs/typeorm';
+import { BlogsModule } from 'src/api/blogs/blogs.module';
+import { UsersModule } from 'src/api/users/users.module';
+import { HttpExceptionFilter } from 'src/application/core/exceptions-filter/http-exception.filter';
+import { CommonService } from 'src/application/core/ultils/common.service';
+import { HttpExceptionAccessRepository } from 'src/infrastructure/repositories/http-exception-access.repository';
+
+import { ormConfig } from './application/core/configs/orm.config';
+import { NotFoundExceptionFilter } from './application/core/exceptions-filter/not-found.filter';
 
 @Module({
   imports: [
@@ -27,6 +27,8 @@ import * as Joi from '@hapi/joi';
         AWS_SECRET_ACCESS_KEY: Joi.string().required(),
         AWS_PUBLIC_BUCKET_NAME: Joi.string().required(),
         PORT: Joi.number(),
+        REDIS_HOST: Joi.string().required(),
+        REDIS_PORT: Joi.number().required(),
       })
       
     })

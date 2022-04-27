@@ -1,4 +1,4 @@
-import { Controller, Get, UseGuards, Post, Body, Query } from '@nestjs/common';
+import { Controller, Get, UseGuards, Post, Body, Query, UseInterceptors, CacheInterceptor } from '@nestjs/common';
 import { CommandBus, QueryBus } from '@nestjs/cqrs';
 import { ListBlogInHomeQuery } from 'src/application/queries/blogs/_index';
 import { AddOrUpdateBlogCommand } from 'src/application/commands/blogs/_index';
@@ -12,6 +12,7 @@ import { ListBlogInHome } from 'src/application/queries/blogs/listHome.query';
 
 @UseGuards(JwtAuthGuard)
 @Controller('api/blogs')
+@UseInterceptors(CacheInterceptor)
 @ApiTags('blogs')
 export class BlogsController {
   constructor(

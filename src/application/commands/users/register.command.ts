@@ -67,7 +67,7 @@ export class RegisterUserHandler
     user.role_id = ROLE_CONFIG.admin;
 
     const avatar = await this.filesService.uploadPublicFile(command.avatar.buffer, command.avatar.originalname);
-    if (avatar.url) user.avatar = avatar.url;
+    // if (avatar.url) user.avatar = avatar.url;
     
     response.data = await this.usersRepository.insertData(user);
     response.status = RESPONSE_STATUS.SUCCESSED;

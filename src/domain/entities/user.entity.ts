@@ -21,8 +21,8 @@ export class Users extends BaseEntity {
   @Column()
   last_logged: Date;
 
-  @Column()
-  avatar: string;
+  // @Column()
+  // avatar: string;
 
   @Column()
   role_id: number;

@@ -36,10 +36,15 @@ export class BlogInHome extends Blog {
   // tags?: Tag[];
 }
 
-export class ListBlogInHome extends ResponseModel<Blog[]> {
-  @ApiProperty({ type: BlogInHome, isArray: true })
-  data: BlogInHome[];
+export class ResponseBlog {
+  data: Blog[];
+  total: number;
 }
+export class ListBlogInHome extends ResponseModel<ResponseBlog> {
+  @ApiProperty()
+  data: ResponseBlog;
+}
+
 
 @QueryHandler(ListBlogInHomeQuery)
 export class ListBlogInHomeHandler
@@ -59,7 +64,8 @@ export class ListBlogInHomeHandler
         query.page,
         query.page_size,
       );
-      response.data = result[0] as BlogInHome[];
+      console.log(result)
+      response.data = result;
       // await this.commonService.asyncForEach(response.data,  async (blog, index) => {
       //   const tags = await this.tagRepository.getTagsByBlog(blog.id);
       //   response.data[index].tags = tags[0];
@@ -73,8 +79,4 @@ export class ListBlogInHomeHandler
     }
     return response;
   }
-}
-
-function ApiModelProperty(arg0: { type: any; isArray: boolean }) {
-  throw new Error('Function not implemented.');
 }
