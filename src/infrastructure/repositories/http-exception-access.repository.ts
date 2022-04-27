@@ -3,6 +3,6 @@ import { HttpExceptionAccess } from 'src/domain/entities/http-exception-access.e
 import { BaseRepository } from 'src/infrastructure/repositories/base.repository';
 
 @EntityRepository(HttpExceptionAccess)
-export class HttpExceptionAccessRepository extends BaseRepository<HttpExceptionAccess> {
-
-}
+export class HttpExceptionAccessRepository extends BaseRepository<
+  HttpExceptionAccess
+> {}

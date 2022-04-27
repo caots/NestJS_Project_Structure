@@ -1,10 +1,10 @@
-import { BaseEvent } from "src/domain/events/base-event";
+import { BaseEvent } from 'src/domain/events/base-event';
 
 export class BlogUpdateEvent extends BaseEvent {
   constructor(
     public readonly eventName: string,
     public readonly blogId: number,
-    public readonly title: string
+    public readonly title: string,
   ) {
     super(eventName);
   }

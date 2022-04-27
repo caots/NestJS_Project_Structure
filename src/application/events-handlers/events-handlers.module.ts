@@ -11,19 +11,14 @@ import { SecurityService } from 'src/application/core/securities/security.servic
 
 @Module({
   imports: [
-  TypeOrmModule.forFeature(
-  [
-    BlogsRepository, 
-    EventLogAccessRepository,
-    UsersRepository,
-    TagsRepository
-  ]),
-  CqrsModule],
-  providers: [
-    ...BlogsEventHandlers,
-    CommonService,
-    SecurityService
-  ]
+    TypeOrmModule.forFeature([
+      BlogsRepository,
+      EventLogAccessRepository,
+      UsersRepository,
+      TagsRepository,
+    ]),
+    CqrsModule,
+  ],
+  providers: [...BlogsEventHandlers, CommonService, SecurityService],
 })
-export class EventsHandlersModule {
-}
+export class EventsHandlersModule {}

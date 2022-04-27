@@ -8,7 +8,7 @@ import { Response, Request } from 'express';
 export class AllExceptionsFilter extends BaseExceptionFilter {
   constructor(
     @InjectRepository(HttpExceptionAccessRepository)
-    private readonly httpExceptionAccessRepository: HttpExceptionAccessRepository
+    private readonly httpExceptionAccessRepository: HttpExceptionAccessRepository,
   ) {
     super();
   }

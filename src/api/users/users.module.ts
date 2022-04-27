@@ -12,13 +12,12 @@ import { EventLogAccessRepository } from 'src/infrastructure/repositories/event-
     TypeOrmModule.forFeature([EventLogAccessRepository]),
     QueriesModule,
     CommandsModule,
-    CqrsModule],
-  controllers: [UsersController]
+    CqrsModule,
+  ],
+  controllers: [UsersController],
 })
 export class UsersModule {
   configure(consumer: MiddlewareConsumer) {
-    consumer
-     .apply(LoggerMiddleware)
-     .forRoutes(UsersController);
+    consumer.apply(LoggerMiddleware).forRoutes(UsersController);
   }
 }

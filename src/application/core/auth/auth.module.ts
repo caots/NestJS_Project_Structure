@@ -12,15 +12,14 @@ import { SecurityService } from '../securities/security.service';
   imports: [
     TypeOrmModule.forFeature([UsersRepository]),
     PassportModule.register({
-    session: true
-  }),
-  JwtModule.register({
-    secret: jwtConstants.secret,
-    signOptions: { expiresIn: jwtConstants.expiresIn }
-  })
- ],
- providers: [ AuthService, SecurityService, JwtStrategy, JwtAuthGuard ],
- exports: [ AuthService ]
+      session: true,
+    }),
+    JwtModule.register({
+      secret: jwtConstants.secret,
+      signOptions: { expiresIn: jwtConstants.expiresIn },
+    }),
+  ],
+  providers: [AuthService, SecurityService, JwtStrategy, JwtAuthGuard],
+  exports: [AuthService],
 })
-
 export class AuthModule {}

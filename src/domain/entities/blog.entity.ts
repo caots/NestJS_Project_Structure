@@ -34,13 +34,22 @@ export class Blog extends BaseEntity {
   @Column()
   status: number;
 
-  updateBlog(content: string, title: string, sub_title: string, status: number) {
+  updateBlog(
+    content: string,
+    title: string,
+    sub_title: string,
+    status: number,
+  ) {
     this.updated_at = new Date();
     this.content = content;
     this.title = title;
     this.sub_title = sub_title;
     this.status = status;
-    this.domainEvents.push(new BlogUpdateEvent('Update Blog Event', this.id, this.title));
-    this.domainEvents.push(new BlogSendPushEvent('Send Push Update Blog Event', this.id, this.title));
+    this.domainEvents.push(
+      new BlogUpdateEvent('Update Blog Event', this.id, this.title),
+    );
+    this.domainEvents.push(
+      new BlogSendPushEvent('Send Push Update Blog Event', this.id, this.title),
+    );
   }
 }

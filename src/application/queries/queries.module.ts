@@ -7,10 +7,14 @@ import { EventLogAccessRepository } from 'src/infrastructure/repositories/event-
 import { BlogQueryHandlers } from 'src/application/queries/blogs/_index';
 import { CommonService } from 'src/application/core/ultils/common.service';
 @Module({
-  imports: [TypeOrmModule.forFeature([BlogsRepository, EventLogAccessRepository, TagsRepository]), CqrsModule],
-  providers: [
-    ...BlogQueryHandlers,
-    CommonService
-  ]
+  imports: [
+    TypeOrmModule.forFeature([
+      BlogsRepository,
+      EventLogAccessRepository,
+      TagsRepository,
+    ]),
+    CqrsModule,
+  ],
+  providers: [...BlogQueryHandlers, CommonService],
 })
-export class QueriesModule { }
+export class QueriesModule {}

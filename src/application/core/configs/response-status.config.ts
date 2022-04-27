@@ -1,11 +1,11 @@
-import { ApiProperty } from "@nestjs/swagger";
+import { ApiProperty } from '@nestjs/swagger';
 
 export const RESPONSE_STATUS = {
   SUCCESSED: 'SUCCESSED',
-  ERROR: 'ERROR'
+  ERROR: 'ERROR',
 };
 
-export class ResponseModel <T> {
+export class ResponseModel<T> {
   @ApiProperty()
   status: string;
 
@@ -14,7 +14,11 @@ export class ResponseModel <T> {
 
   data: T;
 
-  constructor(status: string = RESPONSE_STATUS.SUCCESSED, message: string = '', data: T = null) {
+  constructor(
+    status: string = RESPONSE_STATUS.SUCCESSED,
+    message: string = '',
+    data: T = null,
+  ) {
     this.status = status;
     this.message = message;
     this.data = data;

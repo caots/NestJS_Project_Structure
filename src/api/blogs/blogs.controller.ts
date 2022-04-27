@@ -16,36 +16,41 @@ import { ListBlogInHome } from 'src/application/queries/blogs/listHome.query';
 export class BlogsController {
   constructor(
     private readonly commandBus: CommandBus,
-    private readonly queryBus: QueryBus
+    private readonly queryBus: QueryBus,
   ) {}
 
   @ApiBearerAuth()
   @Roles(ROLE_CONFIG.admin)
   @Get()
-  @ApiResponse({ status: 200, description: 'The record has been successfully get list blogs.', type: ListBlogInHome })
+  @ApiResponse({
+    status: 200,
+    description: 'The record has been successfully get list blogs.',
+    type: ListBlogInHome,
+  })
   public async getBlogsInHome(
-    @Query() params: ListBlogInHomeQuery
-  ) : Promise<ResponseModel<Blog[]>> {
-    return await this.queryBus.execute(new ListBlogInHomeQuery(
-      params.page,
-      params.page_size
-    ));
+    @Query() params: ListBlogInHomeQuery,
+  ): Promise<ResponseModel<Blog[]>> {
+    return await this.queryBus.execute(
+      new ListBlogInHomeQuery(params.page, params.page_size),
+    );
   }
 
   @ApiBearerAuth()
   @Roles(ROLE_CONFIG.admin)
   @Post('create')
   public async addOrUpdateBlog(
-    @Body() body: AddOrUpdateBlogCommand
-  ) : Promise<ResponseModel<Blog>> {
-    return await this.commandBus.execute(new AddOrUpdateBlogCommand(
-      body.id,
-      body.title,
-      body.sub_title,
-      body.content,
-      body.tags,
-      body.categories,
-      body.status
-    ));
+    @Body() body: AddOrUpdateBlogCommand,
+  ): Promise<ResponseModel<Blog>> {
+    return await this.commandBus.execute(
+      new AddOrUpdateBlogCommand(
+        body.id,
+        body.title,
+        body.sub_title,
+        body.content,
+        body.tags,
+        body.categories,
+        body.status,
+      ),
+    );
   }
 }

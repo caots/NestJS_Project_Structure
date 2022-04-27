@@ -9,29 +9,35 @@ export class AuthService {
     @InjectRepository(UsersRepository)
     private readonly usersRepository: UsersRepository,
     private jwtService: JwtService,
-    private securityService: SecurityService) {
+    private securityService: SecurityService,
+  ) {}
 
-  }
-
-  async validateUser(username: string, password: string) : Promise<any> {
+  async validateUser(username: string, password: string): Promise<any> {
     const user = await this.usersRepository.getByUserName(username);
-    if(user) {
-      const isValidatePass = await this.securityService.checkPasswordWithSalt(password, user.password);
-      if(isValidatePass) {
+    if (user) {
+      const isValidatePass = await this.securityService.checkPasswordWithSalt(
+        password,
+        user.password,
+      );
+      if (isValidatePass) {
         return {
           userId: user.id,
           username: user.username,
-          roleId: user.role_id
-        }
+          roleId: user.role_id,
+        };
       }
     }
     return null;
   }
 
   async login(user: any) {
-    const payload = { username: user.username, sub: user.userId, role: user.roleId };
+    const payload = {
+      username: user.username,
+      sub: user.userId,
+      role: user.roleId,
+    };
     return {
-      access_token: this.jwtService.sign(payload)
-    }
+      access_token: this.jwtService.sign(payload),
+    };
   }
 }

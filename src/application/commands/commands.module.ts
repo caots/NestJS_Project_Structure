@@ -1,7 +1,7 @@
 import { Module } from '@nestjs/common';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { CqrsModule } from '@nestjs/cqrs';
-import { AuthModule} from 'src/application/core/auth/auth.module';
+import { AuthModule } from 'src/application/core/auth/auth.module';
 import { UsersRepository } from 'src/infrastructure/repositories/user.repository';
 import { BlogsRepository } from 'src/infrastructure/repositories/blog.repository';
 import { TagsRepository } from 'src/infrastructure/repositories/tags.repository';
@@ -13,21 +13,20 @@ import { SecurityService } from 'src/application/core/securities/security.servic
 
 @Module({
   imports: [
-  TypeOrmModule.forFeature(
-  [
-    BlogsRepository, 
-    EventLogAccessRepository,
-    UsersRepository,
-    TagsRepository
-  ]),
-  CqrsModule,
-  AuthModule],
+    TypeOrmModule.forFeature([
+      BlogsRepository,
+      EventLogAccessRepository,
+      UsersRepository,
+      TagsRepository,
+    ]),
+    CqrsModule,
+    AuthModule,
+  ],
   providers: [
     ...BlogsCommandHandlers,
     ...UsersCommandHandlers,
     CommonService,
-    SecurityService
-  ]
+    SecurityService,
+  ],
 })
-export class CommandsModule {
-}
+export class CommandsModule {}

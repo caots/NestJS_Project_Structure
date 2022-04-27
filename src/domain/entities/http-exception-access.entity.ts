@@ -1,8 +1,8 @@
-import { Column, Entity } from "typeorm";
-import { BaseEntity } from "./base.entity";
+import { Column, Entity } from 'typeorm';
+import { BaseEntity } from './base.entity';
 
-@Entity("http_exception_access")
-export class HttpExceptionAccess extends BaseEntity{
+@Entity('http_exception_access')
+export class HttpExceptionAccess extends BaseEntity {
   @Column()
   created_at: Date;
 

@@ -18,7 +18,8 @@ import { CqrsModule } from '@nestjs/cqrs';
     TypeOrmModule.forFeature([HttpExceptionAccessRepository]),
     UsersModule,
     BlogsModule,
-    CqrsModule],
+    CqrsModule,
+  ],
   controllers: [AppController],
   providers: [
     AppService,
@@ -34,9 +35,7 @@ import { CqrsModule } from '@nestjs/cqrs';
       provide: APP_FILTER,
       useClass: NotFoundExceptionFilter,
     },
-    CommonService
+    CommonService,
   ],
 })
-export class AppModule {
-  
-}
+export class AppModule {}

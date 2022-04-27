@@ -1,9 +1,12 @@
 import { CommandHandler, ICommandHandler } from '@nestjs/cqrs';
-import { InjectRepository } from '@nestjs/typeorm'
+import { InjectRepository } from '@nestjs/typeorm';
 import { Users } from 'src/domain/entities/user.entity';
 import { UsersRepository } from 'src/infrastructure/repositories/user.repository';
 import { SecurityService } from 'src/application/core/securities/security.service';
-import { ResponseModel, RESPONSE_STATUS } from 'src/application/core/configs/response-status.config';
+import {
+  ResponseModel,
+  RESPONSE_STATUS,
+} from 'src/application/core/configs/response-status.config';
 import { ROLE_CONFIG } from 'src/application/core/auth/auth.config';
 import { IsEmail, IsString, IsNotEmpty, MinLength } from 'class-validator';
 
@@ -15,7 +18,7 @@ export class RegisterUserCommand {
   @IsString()
   @IsNotEmpty()
   password: string;
-  
+
   last_ip: string;
   constructor(username: string, password: string, last_ip: string) {
     this.username = username;
@@ -25,23 +28,28 @@ export class RegisterUserCommand {
 }
 
 @CommandHandler(RegisterUserCommand)
-export class RegisterUserHandler implements ICommandHandler<RegisterUserCommand> {
+export class RegisterUserHandler
+  implements ICommandHandler<RegisterUserCommand> {
   constructor(
     @InjectRepository(UsersRepository)
     private readonly usersRepository: UsersRepository,
-    private readonly securityService: SecurityService
+    private readonly securityService: SecurityService,
   ) {}
 
-  public async execute(command: RegisterUserCommand) : Promise<ResponseModel<Users>> {
+  public async execute(
+    command: RegisterUserCommand,
+  ): Promise<ResponseModel<Users>> {
     let response = new ResponseModel();
     const userTemp = await this.usersRepository.getByUserName(command.username);
-    if(userTemp) {
+    if (userTemp) {
       response.status = RESPONSE_STATUS.ERROR;
       response.message = 'Exists user';
       return response as ResponseModel<Users>;
     }
     const user = new Users();
-    const password = await this.securityService.encryptPassword(command.password);
+    const password = await this.securityService.encryptPassword(
+      command.password,
+    );
     user.password = password.hash;
     user.password_salt = password.salt;
     user.username = command.username;
@@ -49,7 +57,7 @@ export class RegisterUserHandler implements ICommandHandler<RegisterUserCommand>
     user.role_id = ROLE_CONFIG.admin;
     response.data = await this.usersRepository.insertData(user);
     response.status = RESPONSE_STATUS.SUCCESSED;
-    response.message = 'Created user successfuly';
+    response.message = 'Created user successfully';
     return response as ResponseModel<Users>;
   }
 }

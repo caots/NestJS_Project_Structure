@@ -3,5 +3,4 @@ import { Role } from 'src/domain/entities/roles.entity';
 import { BaseRepository } from 'src/infrastructure/repositories/base.repository';
 
 @EntityRepository(Role)
-export class TagsRepository extends BaseRepository<Role> {
-}
+export class TagsRepository extends BaseRepository<Role> {}

@@ -14,13 +14,12 @@ import { EventsHandlersModule } from 'src/application/events-handlers/events-han
     QueriesModule,
     CommandsModule,
     EventsHandlersModule,
-    CqrsModule],
-  controllers: [BlogsController]
+    CqrsModule,
+  ],
+  controllers: [BlogsController],
 })
 export class BlogsModule {
   configure(consumer: MiddlewareConsumer) {
-    consumer
-     .apply(LoggerMiddleware)
-     .forRoutes(BlogsController);
+    consumer.apply(LoggerMiddleware).forRoutes(BlogsController);
   }
 }

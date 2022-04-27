@@ -1,6 +1,9 @@
 import { QueryHandler, IQueryHandler } from '@nestjs/cqrs';
 import { InjectRepository } from '@nestjs/typeorm';
-import { ResponseModel, RESPONSE_STATUS } from 'src/application/core/configs/response-status.config';
+import {
+  ResponseModel,
+  RESPONSE_STATUS,
+} from 'src/application/core/configs/response-status.config';
 import { BlogsRepository } from 'src/infrastructure/repositories/blog.repository';
 import { TagsRepository } from 'src/infrastructure/repositories/tags.repository';
 import { Blog } from 'src/domain/entities/blog.entity';
@@ -15,7 +18,7 @@ export class ListBlogInHomeQuery {
   page_size: number;
   constructor(page: number, page_size: number) {
     this.page = page;
-    this.page_size = page_size;   
+    this.page_size = page_size;
   }
 }
 
@@ -39,27 +42,31 @@ export class ListBlogInHome extends ResponseModel<Blog[]> {
 }
 
 @QueryHandler(ListBlogInHomeQuery)
-export class ListBlogInHomeHandler implements IQueryHandler<ListBlogInHomeQuery> {
+export class ListBlogInHomeHandler
+  implements IQueryHandler<ListBlogInHomeQuery> {
   constructor(
     @InjectRepository(BlogsRepository)
     private readonly blogRepository: BlogsRepository,
     @InjectRepository(TagsRepository)
     private readonly tagRepository: TagsRepository,
-    private commonService: CommonService
+    private commonService: CommonService,
   ) {}
 
-  public async execute(query: ListBlogInHomeQuery) : Promise<ListBlogInHome> {
+  public async execute(query: ListBlogInHomeQuery): Promise<ListBlogInHome> {
     const response = new ListBlogInHome();
     try {
-      const result = await this.blogRepository.getBlogInHome(query.page, query.page_size);
+      const result = await this.blogRepository.getBlogInHome(
+        query.page,
+        query.page_size,
+      );
       response.data = result[0] as BlogInHome[];
       // await this.commonService.asyncForEach(response.data,  async (blog, index) => {
       //   const tags = await this.tagRepository.getTagsByBlog(blog.id);
       //   response.data[index].tags = tags[0];
-        
+
       // });
       response.status = RESPONSE_STATUS.SUCCESSED;
-    } catch(err) {
+    } catch (err) {
       response.data = null;
       response.status = RESPONSE_STATUS.ERROR;
       response.message = err;
@@ -68,6 +75,6 @@ export class ListBlogInHomeHandler implements IQueryHandler<ListBlogInHomeQuery>
   }
 }
 
-function ApiModelProperty(arg0: { type: any; isArray: boolean; }) {
+function ApiModelProperty(arg0: { type: any; isArray: boolean }) {
   throw new Error('Function not implemented.');
 }

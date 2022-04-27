@@ -1,5 +1,11 @@
-import { ArgumentsHost, Catch, ExceptionFilter, HttpException, HttpStatus } from "@nestjs/common";
-import { RESPONSE_STATUS } from "../configs/response-status.config";
+import {
+  ArgumentsHost,
+  Catch,
+  ExceptionFilter,
+  HttpException,
+  HttpStatus,
+} from '@nestjs/common';
+import { RESPONSE_STATUS } from '../configs/response-status.config';
 import { Response, Request } from 'express';
 
 export class NotFoundException extends HttpException {
@@ -8,7 +14,7 @@ export class NotFoundException extends HttpException {
   }
 }
 
-@Catch(NotFoundException) 
+@Catch(NotFoundException)
 export class NotFoundExceptionFilter implements ExceptionFilter {
   constructor() {}
 
@@ -21,14 +27,12 @@ export class NotFoundExceptionFilter implements ExceptionFilter {
     console.log('Request Url:', request.url);
     console.log('NotFoundException:', error);
 
-    response
-          .status(status)
-          .json({
-              statusCode: status,
-              status: RESPONSE_STATUS.ERROR,
-              timestamp: new Date().toISOString(),
-              path: request.url,
-              message: error
-          });
+    response.status(status).json({
+      statusCode: status,
+      status: RESPONSE_STATUS.ERROR,
+      timestamp: new Date().toISOString(),
+      path: request.url,
+      message: error,
+    });
   }
 }
