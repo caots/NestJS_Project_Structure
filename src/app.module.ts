@@ -1,6 +1,4 @@
 import { Module } from '@nestjs/common';
-import { AppController } from './app.controller';
-import { AppService } from './app.service';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { ormConfig } from './application/core/configs/orm.config';
 import { APP_FILTER } from '@nestjs/core';
@@ -33,13 +31,12 @@ import * as Joi from '@hapi/joi';
       
     })
   ],
-  controllers: [AppController],
+  controllers: [],
   providers: [
-    AppService,
-    {
-      provide: APP_FILTER,
-      useClass: AllExceptionsFilter,
-    },
+    // {
+    //   provide: APP_FILTER,
+    //   useClass: AllExceptionsFilter,
+    // },
     {
       provide: APP_FILTER,
       useClass: HttpExceptionFilter,
@@ -49,6 +46,7 @@ import * as Joi from '@hapi/joi';
       useClass: NotFoundExceptionFilter,
     },
     CommonService,
+    ConfigService,
   ],
 })
 export class AppModule {}

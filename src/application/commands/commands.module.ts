@@ -9,7 +9,9 @@ import { EventLogAccessRepository } from 'src/infrastructure/repositories/event-
 import { BlogsCommandHandlers } from 'src/application/commands/blogs/_index';
 import { UsersCommandHandlers } from 'src/application/commands/users/_index';
 import { CommonService } from 'src/application/core/ultils/common.service';
+import { FilesService } from 'src/application/core/ultils/Files.service';
 import { SecurityService } from 'src/application/core/securities/security.service';
+import { ConfigService } from '@nestjs/config';
 
 @Module({
   imports: [
@@ -26,7 +28,9 @@ import { SecurityService } from 'src/application/core/securities/security.servic
     ...BlogsCommandHandlers,
     ...UsersCommandHandlers,
     CommonService,
+    FilesService,
     SecurityService,
+    ConfigService,
   ],
 })
 export class CommandsModule {}

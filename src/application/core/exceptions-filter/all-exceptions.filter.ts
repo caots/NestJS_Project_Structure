@@ -20,7 +20,7 @@ export class AllExceptionsFilter extends BaseExceptionFilter {
       exceptionAccess.api_method = request.method;
       exceptionAccess.api_url = request.url;
       exceptionAccess.ip = request.ip;
-      exceptionAccess.api_error = exception.message;
+      exceptionAccess.api_error = JSON.stringify(exception.getResponse());
       exceptionAccess.api_status = 500;
       this.httpExceptionAccessRepository.insertData(exceptionAccess);
     }

@@ -6,12 +6,14 @@ import {
 import { AuthService } from 'src/application/core/auth/auth.service';
 import { ApiProperty } from '@nestjs/swagger';
 import { Users } from 'src/domain/entities/user.entity';
+import { IsNotEmpty } from 'class-validator';
 
 export class LoginCommand {
   @ApiProperty()
   username: string;
 
   @ApiProperty()
+  @IsNotEmpty()
   password: string;
   constructor(username: string, password: string) {
     this.username = username;
@@ -45,7 +47,7 @@ export class LoginHandler implements ICommandHandler<LoginCommand> {
     );
     if (!user) {
       response.status = RESPONSE_STATUS.ERROR;
-      response.message = 'Login faild';
+      response.message = 'Login fails';
       return response;
     }
     response.data = {

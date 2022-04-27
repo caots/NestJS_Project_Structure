@@ -20,12 +20,12 @@ export class HttpExceptionFilter implements ExceptionFilter {
     const response = ctx.getResponse<Response>();
     const request = ctx.getRequest<Request>();
     const status = exception.getStatus();
-    const error = exception.message;
+    const error = exception.getResponse();
     const exceptionAccess = new HttpExceptionAccess();
     exceptionAccess.api_method = request.method;
     exceptionAccess.api_url = request.url;
     exceptionAccess.ip = request.ip;
-    exceptionAccess.api_error = error;
+    exceptionAccess.api_error = JSON.stringify(error);
     exceptionAccess.api_status = status;
     this.httpExceptionAccessRepository.insertData(exceptionAccess);
     response.status(status).json({
