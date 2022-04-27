@@ -29,6 +29,7 @@ import { NotFoundExceptionFilter } from './application/core/exceptions-filter/no
         PORT: Joi.number(),
         REDIS_HOST: Joi.string().required(),
         REDIS_PORT: Joi.number().required(),
+        EMAIL_CONFIRMATION_URL: Joi.string().required(),
       })
       
     })

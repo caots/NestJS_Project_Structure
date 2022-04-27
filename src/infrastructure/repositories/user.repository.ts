@@ -7,4 +7,10 @@ export class UsersRepository extends BaseRepository<Users> {
   public async getByUserName(username: string): Promise<Users> {
     return this.findOne({ where: { username: username } });
   }
+
+  // public async updateConfirmEmail(email: string): Promise<Users> {
+  //   return this.update({ email }, {
+  //     isEmailConfirmed: true
+  //   });
+  // }
 }

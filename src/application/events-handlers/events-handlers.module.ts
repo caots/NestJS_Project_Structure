@@ -8,6 +8,7 @@ import { EventLogAccessRepository } from 'src/infrastructure/repositories/event-
 import { BlogsEventHandlers } from 'src/application/events-handlers/blogs/_index';
 import { CommonService } from 'src/application/core/ultils/common.service';
 import { SecurityService } from 'src/application/core/securities/security.service';
+import { UsersEventHandlers } from 'src/application/events-handlers/users/_index';
 
 @Module({
   imports: [
@@ -19,6 +20,6 @@ import { SecurityService } from 'src/application/core/securities/security.servic
     ]),
     CqrsModule,
   ],
-  providers: [...BlogsEventHandlers, CommonService, SecurityService],
+  providers: [...BlogsEventHandlers, ...UsersEventHandlers, CommonService, SecurityService],
 })
-export class EventsHandlersModule {}
+export class EventsHandlersModule { }

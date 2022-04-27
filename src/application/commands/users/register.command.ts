@@ -68,7 +68,10 @@ export class RegisterUserHandler
 
     const avatar = await this.filesService.uploadPublicFile(command.avatar.buffer, command.avatar.originalname);
     // if (avatar.url) user.avatar = avatar.url;
-    
+
+    // confirm email
+    user.senEmailConfirm(command.username);
+
     response.data = await this.usersRepository.insertData(user);
     response.status = RESPONSE_STATUS.SUCCESSED;
     response.message = 'Created user successfully';

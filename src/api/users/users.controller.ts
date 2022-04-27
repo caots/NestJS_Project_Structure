@@ -24,7 +24,6 @@ export class UsersController {
     const commandResponse = await this.commandBus.execute(
       new RegisterUserCommand(body.username, body.password, file ,req.ip),
     );
-
     response.status(HttpStatus.OK).json(commandResponse);
   }
 
@@ -53,5 +52,11 @@ export class UsersController {
     );
 
     response.status(HttpStatus.OK).json(commandResponse);
+  }
+
+  @Roles(ROLE_CONFIG.anonymous)
+  @Post('confirm')
+  public async confirm(@Body() confirmationData) {
+   
   }
 }

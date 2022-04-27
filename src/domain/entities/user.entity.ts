@@ -1,4 +1,5 @@
 import { Entity, Column } from 'typeorm';
+import { SendEmailConfirmEvent } from '../events/users/send-mail-confirm-email';
 import { BaseEntity } from './base.entity';
 
 @Entity('users')
@@ -6,7 +7,7 @@ export class Users extends BaseEntity {
   @Column()
   created_at: Date;
 
-  @Column()
+  @Column({ unique: true })
   username: string;
 
   @Column()
@@ -21,9 +22,21 @@ export class Users extends BaseEntity {
   @Column()
   last_logged: Date;
 
-  // @Column()
-  // avatar: string;
+  @Column({ default: false })
+  public isEmailConfirmed: boolean;
+
+  @Column()
+  avatar: string;
 
   @Column()
   role_id: number;
+
+  senEmailConfirm(
+    email: string,
+  ) {
+    // this.email = email;
+    this.domainEvents.push(
+      new SendEmailConfirmEvent('Send email confirm', this.username),
+    );
+  }
 }
