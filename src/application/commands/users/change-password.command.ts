@@ -7,10 +7,16 @@ import {
   RESPONSE_STATUS,
 } from 'src/application/core/configs/response-status.config';
 import { Users } from 'src/domain/entities/user.entity';
+import { ApiProperty } from '@nestjs/swagger';
 
 export class ChangePasswordCommand {
+  @ApiProperty()
   username: string;
+  
+  @ApiProperty()
   old_password: string;
+
+  @ApiProperty()
   new_password: string;
   constructor(username: string, old_password: string, new_password: string) {
     this.username = username;

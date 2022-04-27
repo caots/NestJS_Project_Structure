@@ -9,20 +9,29 @@ import {
 } from 'src/application/core/configs/response-status.config';
 import { ROLE_CONFIG } from 'src/application/core/auth/auth.config';
 import { IsEmail, IsString, IsNotEmpty, MinLength } from 'class-validator';
+import { ApiProperty } from '@nestjs/swagger';
+import { FilesService } from 'src/application/core/ultils/Files.service';
 
 export class RegisterUserCommand {
+  @ApiProperty()
   @IsString()
   @IsNotEmpty()
   username: string;
 
+  @ApiProperty()
   @IsString()
   @IsNotEmpty()
   password: string;
 
+  @ApiProperty()
+  avatar: any;
+
+  @ApiProperty()
   last_ip: string;
-  constructor(username: string, password: string, last_ip: string) {
+  constructor(username: string, password: string, avatar: any, last_ip: string) {
     this.username = username;
     this.password = password;
+    this.avatar = avatar;
     this.last_ip = last_ip;
   }
 }
@@ -34,7 +43,8 @@ export class RegisterUserHandler
     @InjectRepository(UsersRepository)
     private readonly usersRepository: UsersRepository,
     private readonly securityService: SecurityService,
-  ) {}
+    private readonly filesService: FilesService
+  ) { }
 
   public async execute(
     command: RegisterUserCommand,
@@ -55,6 +65,10 @@ export class RegisterUserHandler
     user.username = command.username;
     user.last_ip = command.last_ip;
     user.role_id = ROLE_CONFIG.admin;
+
+    const avatar = await this.filesService.uploadPublicFile(command.avatar.buffer, command.avatar.originalname);
+    if (avatar.url) user.avatar = avatar.url;
+    
     response.data = await this.usersRepository.insertData(user);
     response.status = RESPONSE_STATUS.SUCCESSED;
     response.message = 'Created user successfully';

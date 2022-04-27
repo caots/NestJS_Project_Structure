@@ -1,24 +1,11 @@
-import {
-  Controller,
-  Get,
-  Post,
-  Request,
-  Res,
-  Body,
-  HttpStatus,
-  UseGuards,
-} from '@nestjs/common';
-import { CommandBus, QueryBus } from '@nestjs/cqrs';
-import {
-  RegisterUserCommand,
-  ChangePasswordCommand,
-  LoginCommand,
-} from 'src/application/commands/users/_index';
+import { Body, Controller, HttpStatus, Post, Request, Res, UploadedFile, UseGuards, UseInterceptors } from '@nestjs/common';
+import { CommandBus } from '@nestjs/cqrs';
+import { FileInterceptor } from '@nestjs/platform-express';
+import { ApiTags } from '@nestjs/swagger';
+import { ChangePasswordCommand, LoginCommand, RegisterUserCommand } from 'src/application/commands/users/_index';
+import { ROLE_CONFIG } from 'src/application/core/auth/auth.config';
 import { JwtAuthGuard } from 'src/application/core/auth/jwt-auth.guard';
 import { Roles } from 'src/application/core/decorators/roles.decorator';
-import { ROLE_CONFIG } from 'src/application/core/auth/auth.config';
-import { ApiTags } from '@nestjs/swagger';
-
 @UseGuards(JwtAuthGuard)
 @Controller('api/users')
 @ApiTags('users')
@@ -27,13 +14,15 @@ export class UsersController {
 
   @Roles(ROLE_CONFIG.anonymous)
   @Post('register')
+  @UseInterceptors(FileInterceptor('file'))
   public async registerUser(
     @Body() body: RegisterUserCommand,
     @Request() req,
     @Res() response,
+    @UploadedFile() file
   ) {
     const commandResponse = await this.commandBus.execute(
-      new RegisterUserCommand(body.username, body.password, req.ip),
+      new RegisterUserCommand(body.username, body.password, file ,req.ip),
     );
 
     response.status(HttpStatus.OK).json(commandResponse);

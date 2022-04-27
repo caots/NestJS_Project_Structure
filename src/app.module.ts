@@ -12,6 +12,9 @@ import { BlogsModule } from 'src/api/blogs/blogs.module';
 import { CommonService } from 'src/application/core/ultils/common.service';
 import { NotFoundExceptionFilter } from './application/core/exceptions-filter/not-found.filter';
 import { CqrsModule } from '@nestjs/cqrs';
+import { ConfigModule, ConfigService } from '@nestjs/config';
+import * as Joi from '@hapi/joi';
+
 @Module({
   imports: [
     TypeOrmModule.forRoot(ormConfig),
@@ -19,6 +22,16 @@ import { CqrsModule } from '@nestjs/cqrs';
     UsersModule,
     BlogsModule,
     CqrsModule,
+    ConfigModule.forRoot({
+      validationSchema: Joi.object({
+        AWS_REGION: Joi.string().required(),
+        AWS_ACCESS_KEY_ID: Joi.string().required(),
+        AWS_SECRET_ACCESS_KEY: Joi.string().required(),
+        AWS_PUBLIC_BUCKET_NAME: Joi.string().required(),
+        PORT: Joi.number(),
+      })
+      
+    })
   ],
   controllers: [AppController],
   providers: [
