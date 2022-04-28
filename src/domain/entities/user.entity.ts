@@ -34,7 +34,7 @@ export class Users extends BaseEntity {
   senEmailConfirm(
     email: string,
   ) {
-    // this.email = email;
+    this.username = email;
     this.domainEvents.push(
       new SendEmailConfirmEvent('Send email confirm', this.username),
     );

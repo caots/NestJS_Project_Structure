@@ -1,17 +1,18 @@
 import { Module } from '@nestjs/common';
-import { TypeOrmModule } from '@nestjs/typeorm';
+import { ConfigService } from '@nestjs/config';
 import { CqrsModule } from '@nestjs/cqrs';
-import { AuthModule } from 'src/application/core/auth/auth.module';
-import { UsersRepository } from 'src/infrastructure/repositories/user.repository';
-import { BlogsRepository } from 'src/infrastructure/repositories/blog.repository';
-import { TagsRepository } from 'src/infrastructure/repositories/tags.repository';
-import { EventLogAccessRepository } from 'src/infrastructure/repositories/event-log-access.repository';
+import { TypeOrmModule } from '@nestjs/typeorm';
 import { BlogsCommandHandlers } from 'src/application/commands/blogs/_index';
 import { UsersCommandHandlers } from 'src/application/commands/users/_index';
-import { CommonService } from 'src/application/core/ultils/common.service';
-import { FilesService } from 'src/application/core/ultils/Files.service';
+import { AuthModule } from 'src/application/core/auth/auth.module';
 import { SecurityService } from 'src/application/core/securities/security.service';
-import { ConfigService } from '@nestjs/config';
+import { CommonService } from 'src/application/core/ultils/common.service';
+import { EmailService } from 'src/application/core/ultils/email.service';
+import { FilesService } from 'src/application/core/ultils/Files.service';
+import { BlogsRepository } from 'src/infrastructure/repositories/blog.repository';
+import { EventLogAccessRepository } from 'src/infrastructure/repositories/event-log-access.repository';
+import { TagsRepository } from 'src/infrastructure/repositories/tags.repository';
+import { UsersRepository } from 'src/infrastructure/repositories/user.repository';
 
 @Module({
   imports: [
@@ -29,6 +30,7 @@ import { ConfigService } from '@nestjs/config';
     ...UsersCommandHandlers,
     CommonService,
     FilesService,
+    EmailService,
     SecurityService,
     ConfigService,
   ],

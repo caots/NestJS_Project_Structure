@@ -64,7 +64,7 @@ export class RegisterUserHandler
     user.password_salt = password.salt;
     user.username = command.username;
     user.last_ip = command.last_ip;
-    user.role_id = ROLE_CONFIG.admin;
+    user.role_id = ROLE_CONFIG.client;
 
     const avatar = await this.filesService.uploadPublicFile(command.avatar.buffer, command.avatar.originalname);
     // if (avatar.url) user.avatar = avatar.url;
