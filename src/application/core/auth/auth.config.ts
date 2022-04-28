@@ -1,6 +1,7 @@
 export const jwtConstants = {
   secret: 'secretKeyCaoTRan1999',
   expiresIn: '24h',
+  expiresInConfirmEmail: '1h',
 };
 
 export const ROLE_CONFIG = {

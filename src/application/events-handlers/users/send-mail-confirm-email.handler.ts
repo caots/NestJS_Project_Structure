@@ -1,6 +1,6 @@
-import { ConfigService } from '@nestjs/config';
 import { EventsHandler, IEventHandler } from '@nestjs/cqrs';
 import { JwtService } from '@nestjs/jwt';
+import { jwtConstants } from 'src/application/core/auth/auth.config';
 import VerificationTokenPayload from 'src/application/core/interface/verificationTokenPayload.interface';
 import { EmailService } from 'src/application/core/ultils/email.service';
 import { SendEmailConfirmEvent } from 'src/domain/events/users/send-mail-confirm-email';
@@ -9,22 +9,16 @@ import { SendEmailConfirmEvent } from 'src/domain/events/users/send-mail-confirm
 export class SendEmailConfirmHandler implements IEventHandler<SendEmailConfirmEvent> {
 
   constructor(
-    private readonly jwtService: JwtService,
-    private readonly configService: ConfigService,
-    private readonly emailService: EmailService
+    private jwtService: JwtService,
+    private emailService: EmailService
   ) { }
 
   async handle(event: SendEmailConfirmEvent) {
     const payload: VerificationTokenPayload = { email: event.email };
     const token = this.jwtService.sign(payload, {
-      secret: this.configService.get('JWT_VERIFICATION_TOKEN_SECRET'),
-      expiresIn: `${this.configService.get('JWT_VERIFICATION_TOKEN_EXPIRATION_TIME')}s`
+      secret: jwtConstants.secret,
+      expiresIn: jwtConstants.expiresInConfirmEmail
     });
-
-    const url = `${this.configService.get('EMAIL_CONFIRMATION_URL')}?token=${token}`;
-
-    const text = `Welcome to the application. To confirm the email address, click here: ${url}`;
-    const subject = "";
-    await this.emailService.sendVerificationLink(event.email, subject, text);
+    await this.emailService.sendVerificationLink(event.email, token);
   }
 }

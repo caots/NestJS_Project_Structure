@@ -6,6 +6,7 @@ import { CommandsModule } from 'src/application/commands/commands.module';
 import { QueriesModule } from 'src/application/queries/queries.module';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { EventLogAccessRepository } from 'src/infrastructure/repositories/event-log-access.repository';
+import { EventsHandlersModule } from 'src/application/events-handlers/events-handlers.module';
 
 @Module({
   imports: [
@@ -13,6 +14,7 @@ import { EventLogAccessRepository } from 'src/infrastructure/repositories/event-
     QueriesModule,
     CommandsModule,
     CqrsModule,
+    EventsHandlersModule,
   ],
   controllers: [UsersController],
 })

@@ -76,8 +76,6 @@ export class AddOrUpdateBlogHandler
         blogTemp.sub_title = command.sub_title;
         blogTemp.status = command.status;
         const blog = await this.blogRepository.insertData(blogTemp);
-        // await this.blogTagMappingRepository.insertList(blog.id, command.tags);
-        // await this.blogCategoryMappingRepository.insertList(blog.id, command.categories);
         response.data = blog;
         response.status = RESPONSE_STATUS.SUCCESSED;
       } else {
@@ -94,10 +92,6 @@ export class AddOrUpdateBlogHandler
           command.status,
         );
         const blogResponse = await this.blogRepository.updateData(blog);
-        // await this.blogTagMappingRepository.deleteByBlog(blog.id);
-        // await this.blogTagMappingRepository.insertList(blog.id, command.tags);
-        // await this.blogCategoryMappingRepository.deleteByBlog(blog.id);
-        // await this.blogCategoryMappingRepository.insertList(blog.id, command.categories);
         delete blogResponse.domainEvents;
         response.data = blogResponse;
       }

@@ -10,7 +10,7 @@ import {
 import { ROLE_CONFIG } from 'src/application/core/auth/auth.config';
 import { IsEmail, IsString, IsNotEmpty, MinLength } from 'class-validator';
 import { ApiProperty } from '@nestjs/swagger';
-import { FilesService } from 'src/application/core/ultils/Files.service';
+import { FilesService } from 'src/application/core/ultils/files.service';
 
 export class RegisterUserCommand {
   @ApiProperty()
@@ -43,7 +43,7 @@ export class RegisterUserHandler
     @InjectRepository(UsersRepository)
     private readonly usersRepository: UsersRepository,
     private readonly securityService: SecurityService,
-    private readonly filesService: FilesService
+    private filesService: FilesService
   ) { }
 
   public async execute(

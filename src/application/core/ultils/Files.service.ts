@@ -6,7 +6,7 @@ import { v4 as uuid } from 'uuid';
 @Injectable()
 export class FilesService {
   constructor(
-    private readonly configService: ConfigService
+    private configService: ConfigService
   ) { }
 
   async uploadPublicFile(dataBuffer: Buffer, filename: string) {
