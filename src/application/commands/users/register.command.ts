@@ -1,4 +1,4 @@
-import { CommandHandler, ICommandHandler } from '@nestjs/cqrs';
+import { CommandHandler, EventPublisher, ICommandHandler } from '@nestjs/cqrs';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Users } from 'src/domain/entities/user.entity';
 import { UsersRepository } from 'src/infrastructure/repositories/user.repository';
@@ -43,7 +43,7 @@ export class RegisterUserHandler
     @InjectRepository(UsersRepository)
     private readonly usersRepository: UsersRepository,
     private readonly securityService: SecurityService,
-    private filesService: FilesService
+    private publisher: EventPublisher,
   ) { }
 
   public async execute(
@@ -66,10 +66,11 @@ export class RegisterUserHandler
     user.last_ip = command.last_ip;
     user.role_id = ROLE_CONFIG.client;
 
-    const avatar = await this.filesService.uploadPublicFile(command.avatar.buffer, command.avatar.originalname);
+    //const avatar = await this.filesService.uploadPublicFile(command.avatar.buffer, command.avatar.originalname);
     // if (avatar.url) user.avatar = avatar.url;
 
     // confirm email
+    this.publisher.mergeObjectContext(user);
     user.senEmailConfirm(command.username);
 
     response.data = await this.usersRepository.insertData(user);

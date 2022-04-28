@@ -1,6 +1,7 @@
 import { Module } from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
 import { CqrsModule } from '@nestjs/cqrs';
+import { JwtModule } from '@nestjs/jwt';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { BlogsCommandHandlers } from 'src/application/commands/blogs/_index';
 import { UsersCommandHandlers } from 'src/application/commands/users/_index';
@@ -22,6 +23,7 @@ import { UsersRepository } from 'src/infrastructure/repositories/user.repository
     ]),
     CqrsModule,
     AuthModule,
+    JwtModule.register({}),
     UtilsModule,
   ],
   providers: [
