@@ -4,16 +4,9 @@ pipeline {
 
   stages {
     stage('Test') {
-      agent {
-        docker {
-          image 'node:12.18.1'
-          args '-u 0:0 -v /tmp:/root/.cache'
-        }
-      }
-      
+     agent { node { label 'master' } }
       steps {
-        sh 'npm install'
-        sh 'npm run test:cov'
+        echo 'run test step...'
       }
     }
     stage('Build') {
